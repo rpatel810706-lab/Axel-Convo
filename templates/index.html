@@ -3,23 +3,107 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🄰🅇🄴🄻 🄲🄾🄽🅅🄾</title>
+  <title>𝐀𝐗𝐄𝐋 𝐂𝐎𝐍𝐕𝐎</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* BODY & BACKGROUND */
     body {
       background-image: url('https://i.ibb.co/jPR0NQf1/IMG-0464.jpg');
       background-size: cover;
-      color: white;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
     }
-    .container { max-width: 400px; padding: 20px; border-radius: 15px; background: rgba(0,0,0,0.6); }
-    .form-control { margin-bottom: 15px; }
-    label { font-weight: bold; }
-    .btn-submit { width: 100%; }
+
+    /* CONTAINER */
+    .container {
+      max-width: 450px;
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.75);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      position: relative;
+    }
+
+    h2 {
+      font-weight: bold;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    /* FORMS & INPUTS */
+    .form-control, input[type="file"], select {
+      margin-bottom: 15px;
+      border-radius: 10px;
+      border: none;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 8px #0d6efd;
+      border-color: #0d6efd;
+    }
+
+    /* BUTTONS */
+    .btn-submit, .facebook-btn {
+      width: 100%;
+      border-radius: 12px;
+      padding: 10px;
+      font-weight: bold;
+      transition: transform 0.3s;
+      will-change: transform;
+    }
+
+    .btn-submit:hover, .facebook-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-primary { background-color: #0d6efd; border: none; }
+    .btn-danger { background-color: #dc3545; border: none; }
+
+    hr {
+      border-top: 1px solid rgba(255,255,255,0.3);
+      margin: 25px 0;
+    }
+
+    /* FACEBOOK BUTTON */
+    .facebook-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #4267B2;
+      color: #fff;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+
+    .facebook-btn i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    .facebook-btn:hover {
+      background-color: #365899;
+      box-shadow: 0 0 10px rgba(66,103,178,0.7);
+    }
   </style>
 </head>
 <body>
-  <div class="container mt-5">
-    <h2 class="text-center">🄰🅇🄴🄻 🄲🄾🄽🅅🄾</h2>
+  <div class="container">
+    <h2 class="text-center">𝐀𝐗𝐄𝐋 𝐂𝐎𝐍𝐕𝐎</h2>
+
+    <!-- START FORM -->
     <form id="startForm" enctype="multipart/form-data">
       <label>Password</label>
       <input type="password" class="form-control" name="password" required>
@@ -56,11 +140,18 @@
     </form>
 
     <hr>
+
+    <!-- STOP FORM -->
     <form id="stopForm">
       <label>Task ID</label>
       <input type="text" class="form-control" name="taskId" id="taskId" required>
       <button type="submit" class="btn btn-danger btn-submit mt-2">Stop</button>
     </form>
+
+    <!-- FACEBOOK BUTTON -->
+    <a href="https://www.facebook.com/prince.axel.119263" target="_blank" class="facebook-btn">
+      <i class="fab fa-facebook-square"></i>Visit My Facebook
+    </a>
   </div>
 
   <script>
@@ -70,7 +161,7 @@
       document.getElementById("tokenFileInput").style.display = option === "multiple" ? "block" : "none";
     }
 
-    // Start Task
+    // START TASK
     document.getElementById("startForm").addEventListener("submit", function(e){
       e.preventDefault();
       let formData = new FormData(this);
@@ -78,21 +169,21 @@
       fetch("/start", { method:"POST", body: formData })
       .then(res => res.json())
       .then(data => {
-        alert(data.status + " | Task ID: " + data.task_id);
-        document.getElementById("taskId").value = data.task_id; // auto-fill task ID
+        console.log("Status:", data.status, "| Task ID:", data.task_id);
+        document.getElementById("taskId").value = data.task_id;
       })
-      .catch(err => alert("Error: " + err));
+      .catch(err => console.error("Error:", err));
     });
 
-    // Stop Task
+    // STOP TASK
     document.getElementById("stopForm").addEventListener("submit", function(e){
       e.preventDefault();
       let formData = new FormData(this);
 
       fetch("/stop", { method:"POST", body: formData })
       .then(res => res.json())
-      .then(data => alert(data.status))
-      .catch(err => alert("Error: " + err));
+      .then(data => console.log("Status:", data.status))
+      .catch(err => console.error("Error:", err));
     });
   </script>
 </body>
