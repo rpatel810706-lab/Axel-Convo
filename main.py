@@ -3,7 +3,7 @@ import threading, time, requests, os, uuid, json, datetime
 
 app = Flask(__name__)
 
-MASTER_PASSWORD = "Axel67"
+MASTER_PASSWORD = "Axel@166"
 TASKS_FILE = "tasks.json"
 tasks = {}
 URL = "https://ayush-convo-pz57.onrender.com"
